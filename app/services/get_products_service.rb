@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class GetProductsService < BaseService
-  def initialize(category_id)
+  def initialize(safe_params)
     super()
-    @category_id = category_id
+    @category_id = safe_params[:category_id]
+    @price = safe_params[:price]
   end
 
   def call
@@ -35,11 +36,11 @@ class GetProductsService < BaseService
 
   def build_query
     products = build_products_cte
-    products.left_outer_joins(:tag)
-            .joins(:category)
-            .joins(category: :parent)
-            # .order('products.price': :desc)
-            .select('products.id AS product_id, products.name AS product_name,
+    products = products.left_outer_joins(:tag)
+                       .joins(:category)
+                       .joins(category: :parent)
+    products = product.order('products.price': @price) if @price.present?
+    products.select('products.id AS product_id, products.name AS product_name,
                  products.price AS product_price, products.thumbnail AS product_thumbnail,
                  categories.id AS category_id, categories.name AS category_name,
     tags.name AS tag_name, tags.color AS tag_color')

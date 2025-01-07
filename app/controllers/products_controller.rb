@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 class ProductsController < ApplicationController
+  PRICE_ORDER = %w[asc desc].freeze
+
   schema(:index) do
     required(:category_id).value(:uuid_v4?)
+    optional(:price).value(included_in?: PRICE_ORDER)
   end
 
   def index
-    service = GetProductsService.call(safe_params[:category_id])
+    service = GetProductsService.call(safe_params)
 
     if service.success?
       render json: { data: service.result }, status: :ok, each_serializer: ProductSerializer
@@ -34,9 +37,8 @@ class ProductsController < ApplicationController
   end
 
   def above_average_price
-    products = Product.where(
-      'price > (SELECT AVG(price) FROM products p2 WHERE p2.id != products.id)'
-    )
+    # products = Product.where('price > (SELECT AVG(price) FROM products)')
+    products = Product.where('price > (:avg)', avg: Product.minimum(:price))
 
     render json: products, status: :ok
   end

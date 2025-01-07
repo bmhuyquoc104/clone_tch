@@ -6,10 +6,9 @@ class CategoriesController < ApplicationController
   end
 
   def sizes
-    sizes = Category.joins(:products).joins(products: :sizes)
-                    .where(id: safe_params[:id])
-                    .select('sizes.id AS id, sizes.name AS name')
-    render json: sizes, status: :ok
+    service = GetSizesService.call(safe_params)
+
+    render json: { data: service.result }, status: :ok
   end
 
   schema(:toppings) do
@@ -17,9 +16,8 @@ class CategoriesController < ApplicationController
   end
 
   def toppings
-    toppings = Category.joins(:products).joins(products: :toppings)
-                       .where(id: safe_params[:id])
-                       .select('toppings.id AS id, toppings.name AS name')
-    render json: toppings, status: :ok
+    service = GetToppingsService.call(safe_params)
+
+    render json: { data: service.result }, status: :ok
   end
 end

@@ -22,7 +22,7 @@ RSpec.describe CategoriesController, type: :controller do
         get :sizes, params: { id: tea_category.id }
 
         expect(response.status).to eq 200
-        expect(response.parsed_body.first[:id]).to eq(small.id)
+        expect(response.parsed_body[:data].first[:id]).to eq(small.id)
       end
     end
   end
@@ -43,7 +43,7 @@ RSpec.describe CategoriesController, type: :controller do
         get :toppings, params: { id: tea_category.id }
 
         expect(response.status).to eq 200
-        expect(response.parsed_body.first[:id]).to eq(jelly.id)
+        expect(response.parsed_body[:data].first[:id]).to eq(jelly.id)
       end
     end
   end
