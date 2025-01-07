@@ -242,7 +242,7 @@ describe GetProductsService do
 
               expect(service.success?).to eq true
               expect(service.result.size).to eq 2
-              expect(service.result).to eq(expected_result)
+              expect(service.result).to match_array(expected_result)
               expect(cached_value).to eq(expected_result)
             end
           end

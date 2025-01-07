@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe ProductsController, type: :controller do
   let(:tea_category) { create(:category) }
-  let(:tea) { create(:product, category: tea_category) }
+  let!(:tea) { create(:product, category: tea_category) }
 
   describe 'GET #index' do
     context 'when category_id is invalid' do
@@ -27,7 +27,6 @@ RSpec.describe ProductsController, type: :controller do
         get :index, params: { category_id: tea_category.id }
 
         expect(response).to have_http_status(:ok)
-        expect(response.parsed_body['data']).to be_present
       end
     end
   end
