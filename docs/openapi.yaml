@@ -1,0 +1,21 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: "Sample coffee shop web app"
+  description: >
+    # This is sample document contains all APIs for coffee shop
+servers:
+  - url: http://localhost:3000/api/v1/tch
+    description: Development server
+paths:
+  '/products':
+    $ref: 'paths/v1_products.yaml'
+    # TODO:// MIGRATE THOSE FROM API.apib to yaml
+  # '/cities': 
+  #   $ref: 'paths/v1_cities.yaml'
+  # '/stores':
+  #   $ref: 'paths/v1_stores.yaml'
+  # '/districts':
+  #   $ref: 'paths/v1_districts.yaml'
+  # '/categories':
+  #   $ref: 'paths/v1_categories.yaml'

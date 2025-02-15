@@ -1,0 +1,30 @@
+type: object
+properties:
+  products:
+    type: array
+    items:
+      type: object
+      properties:
+         name: 
+          type: string
+          example: Cà phê sữa đá
+         id: 
+          type: string
+          format: uuid
+          example: a1ecdebc-b488-4a03-ad95-5d0dac83d879
+         price:
+          type: number
+          example: 22.500
+         thumbnail: 
+          type: string
+          example: ca_phe_sua_da.jpg
+         tag:
+            type: object
+            properties:
+                name: 
+                  type: string
+                  example: Best seller
+                color: 
+                  type: string
+                  example: red
+
